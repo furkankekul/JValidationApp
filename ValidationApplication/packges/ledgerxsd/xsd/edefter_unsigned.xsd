@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:plt="http://www.xbrl.org/int/gl/plt/2006-10-25" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:edefter="http://www.edefter.gov.tr" xmlns:ns1="http://uri.etsi.org/01903/v1.4.1#" xmlns:ns2="http://www.edefter.gov.tr/ek" targetNamespace="http://www.edefter.gov.tr">
+	<xs:import namespace="http://www.xbrl.org/2003/instance" schemaLocation="xbrl-instance-2003-12-31.xsd"/>
+	<xs:import namespace="http://www.xbrl.org/int/gl/plt/2006-10-25" schemaLocation="2006-10-25/plt/case-c-b/gl-plt-2006-10-25.xsd"/>
+	<xs:import namespace="http://www.edefter.gov.tr/ek" schemaLocation="edefter_ek.xsd"/>
+		<xs:element name="defter">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="xbrli:xbrl"/>
+				<xs:element name="extensions" type="edefter:extensionsType" minOccurs="0"/>
+				<xs:choice>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element><xs:element name="berat">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="xbrli:xbrl"/>
+				<xs:element name="extensions" type="edefter:extensionsType" minOccurs="0"/>
+				<xs:choice>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="defterraporu">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="xbrli:xbrl"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="extensionsType">
+		<xs:sequence>
+			<xs:element name="extension" maxOccurs="unbounded" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##other" processContents="lax"/>
+					</xs:sequence>
+					<xs:attribute name="Id" type="xs:ID"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

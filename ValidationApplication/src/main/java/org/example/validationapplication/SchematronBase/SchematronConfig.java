@@ -1,6 +1,7 @@
 package org.example.validationapplication.SchematronBase;
 
 import net.sf.saxon.s9api.*;
+
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.StringReader;
@@ -21,7 +22,7 @@ public class SchematronConfig {
         return saxonProcessor;
     }
 
-    public XsltTransformer getSchematronConfig(Path xsltFilePath) throws IOException, SaxonApiException, SaxonApiException {
+    public XsltTransformer getSchematronConfig(Path xsltFilePath) throws IOException, SaxonApiException {
         StreamSource xsltSource = getXsltDocument(xsltFilePath);
         XsltCompiler xsltCompiler = saxonProcessor.newXsltCompiler();
         XsltExecutable xsltExecutable = xsltCompiler.compile(xsltSource);
@@ -41,7 +42,7 @@ public class SchematronConfig {
     }
 
     private StreamSource getXsltDocument(Path xsltFilePath) throws IOException {
-        return new StreamSource(new StringReader(Files.readString(xsltFilePath)));
+        return new StreamSource(new StringReader(Files.readString(xsltFilePath.toAbsolutePath().normalize())));
     }
 
 }

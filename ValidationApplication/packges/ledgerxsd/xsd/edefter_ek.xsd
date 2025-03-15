@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.edefter.gov.tr/ek" xmlns:defterek="http://www.edefter.gov.tr/ek"> 
+    <xs:complexType name="BinaryObjectType"> 
+        <xs:simpleContent> 
+            <xs:extension base="xs:base64Binary"> 
+                <xs:attribute name="format" type="xs:string" use="optional"/> 
+                <xs:attribute name="mimeCode" type="xs:normalizedString" use="optional"/> 
+                <xs:attribute name="encodingCode" type="xs:normalizedString" use="optional"/> 
+                <xs:attribute name="characterSetCode" type="xs:normalizedString" use="optional"/> 
+                <xs:attribute name="uri" type="xs:anyURI" use="optional"/> 
+                <xs:attribute name="filename" type="xs:string" use="optional"/> 
+            </xs:extension> 
+        </xs:simpleContent> 
+    </xs:complexType> 
+    <xs:element default="" name="binaryObject" type="defterek:BinaryObjectType"/> 
+</xs:schema>
