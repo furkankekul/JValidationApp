@@ -76,7 +76,7 @@ public class Validation implements IValidation {
             xmlString = new String(file.getBytes(), StandardCharsets.UTF_8);
         }
 
-        String result = SchematronConfig.getInstance().getSchematronControlResult(xmlString, xsltTransformer);
+        String result = SchematronConfig.getInstance().getSchematronControlResult(xmlString, file, xsltTransformer);
         String finalResult = result.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
         if (finalResult.equals("")) {
             return new ValidationResultDTO() {

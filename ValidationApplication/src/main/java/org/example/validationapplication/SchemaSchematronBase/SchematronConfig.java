@@ -1,6 +1,7 @@
 package org.example.validationapplication.SchemaSchematronBase;
 
 import net.sf.saxon.s9api.*;
+import org.springframework.web.multipart.MultipartFile;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.StringReader;
@@ -34,10 +35,12 @@ public class SchematronConfig {
         return xsltTransformer;
     }
 
-    public String getSchematronControlResult(String xmlString, XsltTransformer xsltTransformer) throws SaxonApiException {
+    public String getSchematronControlResult(String xmlString, MultipartFile file, XsltTransformer xsltTransformer) throws SaxonApiException {
         StringWriter stringWriter = new StringWriter();
         Serializer output = SchematronConfig.getSaxonProcessor().newSerializer(stringWriter);
-        xsltTransformer.setSource(new StreamSource(new StringReader(xmlString)));
+        StreamSource source = new StreamSource(new StringReader(xmlString));
+        source.setSystemId(file.getOriginalFilename());
+        xsltTransformer.setSource(source);
         xsltTransformer.setDestination(output);
         xsltTransformer.transform();
         xsltTransformer.close();
