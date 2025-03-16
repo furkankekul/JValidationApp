@@ -2,14 +2,12 @@ package org.example.validationapplication.ValidationBase;
 
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XsltTransformer;
-import org.example.validationapplication.SchematronBase.SchematronConfig;
-import org.example.validationapplication.Utils.DocumentType;
+import org.example.validationapplication.SchemaSchematronBase.SchematronConfig;
 import org.example.validationapplication.Utils.Unzip;
 import org.example.validationapplication.Utils.ValidationResultDTO;
 import org.example.validationapplication.Utils.ValidationType;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
-
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -19,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Validation implements IValidation {

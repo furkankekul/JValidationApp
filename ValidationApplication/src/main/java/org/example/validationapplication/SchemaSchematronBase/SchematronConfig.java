@@ -1,18 +1,24 @@
-package org.example.validationapplication.SchematronBase;
+package org.example.validationapplication.SchemaSchematronBase;
 
 import net.sf.saxon.s9api.*;
-
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SchematronConfig {
-    private static final Processor saxonProcessor = new Processor(false);
 
     private static final SchematronConfig instance = new SchematronConfig();
+
+    private static final Processor saxonProcessor = new Processor(false);
+
+    private static final XsltCompiler xsltCompiler = saxonProcessor.newXsltCompiler();
+
+    private static final Map<Path, XsltExecutable> cache = new HashMap<>();
 
     public static SchematronConfig getInstance() {
         return instance;
@@ -23,9 +29,7 @@ public class SchematronConfig {
     }
 
     public XsltTransformer getSchematronConfig(Path xsltFilePath) throws IOException, SaxonApiException {
-        StreamSource xsltSource = getXsltDocument(xsltFilePath);
-        XsltCompiler xsltCompiler = saxonProcessor.newXsltCompiler();
-        XsltExecutable xsltExecutable = xsltCompiler.compile(xsltSource);
+        XsltExecutable xsltExecutable = getCompiledXslt(xsltFilePath);
         XsltTransformer xsltTransformer = xsltExecutable.load();
         return xsltTransformer;
     }
@@ -39,6 +43,15 @@ public class SchematronConfig {
         xsltTransformer.close();
         xsltTransformer.setSource(null);
         return stringWriter.toString();
+    }
+
+    private XsltExecutable getCompiledXslt(Path xsltFilePath) throws SaxonApiException, IOException {
+        if (cache.containsKey(xsltFilePath)) {
+            return cache.get(xsltFilePath);
+        }
+        XsltExecutable xsltExecutable = xsltCompiler.compile(getXsltDocument(xsltFilePath));
+        cache.put(xsltFilePath, xsltExecutable);
+        return xsltExecutable;
     }
 
     private StreamSource getXsltDocument(Path xsltFilePath) throws IOException {

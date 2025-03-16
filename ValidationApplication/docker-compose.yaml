@@ -5,6 +5,14 @@ services:
     image: validationservice:v1
     ports:
       - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"     # Maksimum 1 CPU çekirdeği kullanabilir
+          memory: "2GB"   # Maksimum 2GB RAM kullanabilir
+        reservations:
+          cpus: "0.5"     # Minimum 0.5 CPU rezerve edilir
+          memory: "512MB" # Minimum 512MB RAM rezerve edilir
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - env_ublMainXsltFilePath=/mnt/data/packges/schematron/UBL-TR_Main_Schematron.xslt
