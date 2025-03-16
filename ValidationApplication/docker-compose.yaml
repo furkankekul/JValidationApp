@@ -24,4 +24,4 @@ services:
       - env_XsdReceiptAdviceFilePath=/mnt/data/packges/xsdrt/maindoc/UBL-ReceiptAdvice-2.1.xsd
       - env_XsdLedgerFilePath=/mnt/data/packges/ledgerxsd/xsd/edefter.xsd
     volumes:
-      - "C:/JBitirmeOdevi/ValidationApplication/packges:/mnt/data/packges/"
+      - "C:/JValidationApp/ValidationApplication/packges:/mnt/data/packges/"
