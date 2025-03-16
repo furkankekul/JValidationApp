@@ -27,7 +27,7 @@ public class Validation implements IValidation {
     public ValidationResultDTO schemaValidation(MultipartFile file, Path xsdFilePath) throws IOException, SAXException {
         try {
             if (file.getOriginalFilename().endsWith(".zip")) {
-                xmlString = Unzip.extractZip(file);
+                xmlString = Unzip.extractXml(file);
             } else {
                 xmlString = new String(file.getBytes(), StandardCharsets.UTF_8);
             }
@@ -71,7 +71,7 @@ public class Validation implements IValidation {
             IOException, SaxonApiException {
         XsltTransformer xsltTransformer = SchematronConfig.getInstance().getSchematronConfig(xsltFilePath);
         if (file.getOriginalFilename().endsWith(".zip")) {
-            xmlString = Unzip.extractZip(file);
+            xmlString = Unzip.extractXml(file);
         } else {
             xmlString = new String(file.getBytes(), StandardCharsets.UTF_8);
         }

@@ -2,16 +2,16 @@ version: '3.8'
 services:
   validationservice:
     container_name: jvalidationservice
-    image: validationservice:v1
+    image: validationservice2:v2
     ports:
       - "8080:8080"
     deploy:
       resources:
         limits:
-          cpus: "1.0"     # Maksimum 1 CPU çekirdeği kullanabilir
-          memory: "2GB"   # Maksimum 2GB RAM kullanabilir
+          cpus: "1.5"     # Maksimum 1,5 CPU çekirdeği kullanabilir
+          memory: "1GB"   # Maksimum 1GB RAM kullanabilir
         reservations:
-          cpus: "0.5"     # Minimum 0.5 CPU rezerve edilir
+          cpus: "1.0"     # Minimum 1 CPU rezerve edilir
           memory: "512MB" # Minimum 512MB RAM rezerve edilir
     environment:
       - SPRING_PROFILES_ACTIVE=prod
