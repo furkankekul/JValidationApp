@@ -2,20 +2,14 @@ package org.example.validationapplication.ValidationBase;
 
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XsltTransformer;
+import org.example.validationapplication.SchemaSchematronBase.SchemaConfig;
 import org.example.validationapplication.SchemaSchematronBase.SchematronConfig;
 import org.example.validationapplication.Utils.Unzip;
 import org.example.validationapplication.Utils.ValidationResultDTO;
 import org.example.validationapplication.Utils.ValidationType;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
-import javax.xml.XMLConstants;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
@@ -32,30 +26,10 @@ public class Validation implements IValidation {
                 xmlString = new String(file.getBytes(), StandardCharsets.UTF_8);
             }
 
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new File(xsdFilePath.toString()));
-            Validator validator = schema.newValidator();
-            validator.validate(new StreamSource(new StringReader(xmlString)));
-
-            return new ValidationResultDTO() {
-                {
-                    this.validationType = ValidationType.Schema;
-                    this.schemaValidationStatus = true;
-                    this.schemaValidationMessage = "Şema Doğrulaması Başarılı.";
-                }
-            };
+            return SchemaConfig.getInstance().schemaValidation(xmlString, xsdFilePath);
 
         } catch (IOException e) {
             System.out.println("Dosya okuma sırasında hata meydana geldi.!!!" + e.getMessage());
-            return new ValidationResultDTO() {
-                {
-                    this.validationType = ValidationType.Schema;
-                    this.schemaValidationStatus = false;
-                    this.exceptionMessage = e.getMessage();
-                }
-            };
-        } catch (SAXException e) {
-            System.out.println("Şema doğrulaması sırasında bir hata meydana geldi." + e.getMessage());
             return new ValidationResultDTO() {
                 {
                     this.validationType = ValidationType.Schema;
