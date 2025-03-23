@@ -35,17 +35,19 @@ public class SchematronConfig {
         return xsltTransformer;
     }
 
-    public String getSchematronControlResult(String xmlString, MultipartFile file, XsltTransformer xsltTransformer) throws SaxonApiException {
+    public StringWriter getSchematronControlResult(String xmlString, MultipartFile file, XsltTransformer xsltTransformer) throws SaxonApiException {
         StringWriter stringWriter = new StringWriter();
+        StringReader reader = new StringReader(xmlString);
         Serializer output = SchematronConfig.getSaxonProcessor().newSerializer(stringWriter);
-        StreamSource source = new StreamSource(new StringReader(xmlString));
+        StreamSource source = new StreamSource(reader);
         source.setSystemId(file.getOriginalFilename());
         xsltTransformer.setSource(source);
         xsltTransformer.setDestination(output);
         xsltTransformer.transform();
         xsltTransformer.close();
-        xsltTransformer.setSource(null);
-        return stringWriter.toString();
+        reader.close();
+        output.close();
+        return stringWriter;
     }
 
     private XsltExecutable getCompiledXslt(Path xsltFilePath) throws SaxonApiException, IOException {

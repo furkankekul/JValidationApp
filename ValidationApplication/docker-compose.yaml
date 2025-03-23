@@ -2,17 +2,17 @@ version: '3.8'
 services:
   validationservice:
     container_name: jvalidationservice
-    image: validationservice2:v2
+    image: validationservice:v1.0.0
     ports:
       - "8080:8080"
     deploy:
       resources:
         limits:
-          cpus: "1.5"     # Maksimum 1,5 CPU çekirdeği kullanabilir
-          memory: "1GB"   # Maksimum 1GB RAM kullanabilir
+          cpus: "2.0"
+          memory: "2GB"
         reservations:
-          cpus: "1.0"     # Minimum 1 CPU rezerve edilir
-          memory: "512MB" # Minimum 512MB RAM rezerve edilir
+          cpus: "1.5"
+          memory: "1GB"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - env_ublMainXsltFilePath=/mnt/data/packges/schematron/UBL-TR_Main_Schematron.xslt

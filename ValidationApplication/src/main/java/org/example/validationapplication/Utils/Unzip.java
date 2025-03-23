@@ -28,6 +28,7 @@ public class Unzip {
             while ((length = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, length);
             }
+            inputStream.close();
         }
         return writer.toString();
     }

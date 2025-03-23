@@ -10,6 +10,7 @@ import org.example.validationapplication.Utils.ValidationType;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
@@ -50,8 +51,11 @@ public class Validation implements IValidation {
             xmlString = new String(file.getBytes(), StandardCharsets.UTF_8);
         }
 
-        String result = SchematronConfig.getInstance().getSchematronControlResult(xmlString, file, xsltTransformer);
-        String finalResult = result.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
+        StringWriter result = SchematronConfig.getInstance().getSchematronControlResult(xmlString, file, xsltTransformer);
+        String finalResult = result.toString().replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
+        result.close();
+        xmlString = null;
+        file = null;
         if (finalResult.equals("")) {
             return new ValidationResultDTO() {
                 {
